@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gridwork Studio — Web Design for Local Business</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Epilogue:ital,wght@0,300;0,400;0,500;0,700;1,300;1,400&display=swap" rel="stylesheet">
+<script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+<style>
+  :root {
+    --ink:     #0E0E0E;
+    --ink-2:   #181818;
+    --ink-3:   #222222;
+    --wire:    #2E2E2E;
+    --mist:    #3A3A3A;
+    --silver:  #888888;
+    --fog:     #AAAAAA;
+    --paper:   #F0EDE8;
+    --paper-2: #E8E4DD;
+    --amber:   #E8B84B;
+    --amber-d: #C99A2E;
+    --white:   #FFFFFF;
+    --serif:   'Bebas Neue', Impact, sans-serif;
+    --body:    'Epilogue', sans-serif;
+    --nav-h:   68px;
+    --ease:    cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--body);
+    background: var(--ink);
+    color: var(--paper);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    cursor: none;
+  }
+
+  /* ── CUSTOM CURSOR ── */
+  .cursor {
+    position: fixed; z-index: 9999; pointer-events: none;
+    width: 10px; height: 10px;
+    background: var(--amber);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.2s var(--ease), height 0.2s var(--ease), background 0.2s;
+  }
+  .cursor.hover { width: 36px; height: 36px; background: transparent; border: 1.5px solid var(--amber); }
+  @media (pointer: coarse) { .cursor { display: none; } body { cursor: auto; } }
+
+  /* ── GRAIN OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed; inset: 0; z-index: 9998; pointer-events: none;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+    opacity: 0.032;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    height: var(--nav-h);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 48px;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s, background 0.3s;
+  }
+  nav.scrolled { background: rgba(14,14,14,0.95); backdrop-filter: blur(12px); border-color: var(--wire); }
+
+  .nav-logo {
+    font-family: var(--serif);
+    font-size: 20px;
+    letter-spacing: 0.12em;
+    color: var(--white);
+    text-decoration: none;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .nav-logo-mark {
+    width: 28px; height: 28px;
+    border: 1.5px solid var(--amber);
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3px;
+    padding: 5px;
+  }
+  .nav-logo-mark span { background: var(--amber); display: block; }
+  .nav-logo-mark span:nth-child(2) { background: transparent; border: 1px solid var(--amber); }
+
+  .nav-links { display: flex; align-items: center; gap: 32px; }
+  .nav-links a {
+    font-size: 12px; font-weight: 400;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--fog); text-decoration: none;
+    transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--white); }
+
+  .nav-cta {
+    background: var(--amber) !important;
+    color: var(--ink) !important;
+    padding: 9px 20px !important;
+    font-weight: 500 !important;
+    transition: background 0.2s !important;
+  }
+  .nav-cta:hover { background: var(--white) !important; }
+
+  .nav-mobile-btn { display: none; background: none; border: none; cursor: pointer; }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    padding: calc(var(--nav-h) + 60px) 48px 80px;
+    display: grid;
+    grid-template-rows: auto 1fr auto;
+    position: relative;
+    overflow: hidden;
+    border-bottom: 1px solid var(--wire);
+  }
+
+  /* background grid lines */
+  .hero::after {
+    content: '';
+    position: absolute; inset: 0; z-index: 0;
+    background-image:
+      linear-gradient(var(--wire) 1px, transparent 1px),
+      linear-gradient(90deg, var(--wire) 1px, transparent 1px);
+    background-size: 80px 80px;
+    opacity: 0.25;
+    mask-image: radial-gradient(ellipse 80% 80% at 50% 50%, black 40%, transparent 100%);
+  }
+
+  .hero-top {
+    position: relative; z-index: 1;
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 40px;
+  }
+  .hero-tag {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--amber); font-weight: 500;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .hero-tag::before { content: ''; display: block; width: 28px; height: 1px; background: var(--amber); }
+  .hero-est { font-size: 11px; letter-spacing: 0.14em; color: var(--mist); text-transform: uppercase; }
+
+  .hero-center { position: relative; z-index: 1; display: flex; flex-direction: column; justify-content: center; }
+
+  .hero-headline {
+    font-family: var(--serif);
+    font-size: clamp(72px, 11vw, 160px);
+    line-height: 0.92;
+    letter-spacing: 0.02em;
+    color: var(--white);
+    margin-bottom: 0;
+  }
+  .hero-headline .outline {
+    -webkit-text-stroke: 1.5px var(--paper-2);
+    color: transparent;
+  }
+  .hero-headline .amber { color: var(--amber); }
+
+  .hero-sub-row {
+    display: flex; align-items: flex-end; justify-content: space-between;
+    margin-top: 40px; gap: 40px; flex-wrap: wrap;
+  }
+  .hero-sub {
+    font-size: 16px; font-weight: 300; line-height: 1.7;
+    color: var(--fog); max-width: 400px;
+  }
+  .hero-sub em { font-style: italic; color: var(--paper); }
+
+  .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
+
+  .btn-primary {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--amber); color: var(--ink);
+    font-family: var(--body); font-size: 13px; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none;
+    padding: 15px 28px; border: none; cursor: pointer;
+    transition: background 0.2s, transform 0.2s var(--ease);
+  }
+  .btn-primary:hover { background: var(--white); transform: translateY(-2px); }
+
+  .btn-outline {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: transparent; color: var(--paper);
+    font-family: var(--body); font-size: 13px; font-weight: 400;
+    letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none;
+    padding: 15px 28px; border: 1px solid var(--wire); cursor: pointer;
+    transition: border-color 0.2s, color 0.2s, transform 0.2s var(--ease);
+  }
+  .btn-outline:hover { border-color: var(--paper); color: var(--white); transform: translateY(-2px); }
+
+  .hero-bottom {
+    position: relative; z-index: 1;
+    display: flex; gap: 40px; padding-top: 48px;
+    border-top: 1px solid var(--wire);
+    flex-wrap: wrap;
+  }
+  .hero-stat { }
+  .hero-stat-num {
+    font-family: var(--serif); font-size: 36px;
+    color: var(--white); letter-spacing: 0.04em;
+  }
+  .hero-stat-label { font-size: 12px; color: var(--silver); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
+
+  /* ── MARQUEE ── */
+  .marquee-wrap {
+    background: var(--amber); padding: 14px 0;
+    overflow: hidden; white-space: nowrap;
+    border-bottom: 1px solid var(--amber-d);
+  }
+  .marquee-track {
+    display: inline-flex; gap: 0;
+    animation: marquee 28s linear infinite;
+  }
+  .marquee-track span {
+    font-family: var(--serif); font-size: 15px;
+    letter-spacing: 0.14em; color: var(--ink);
+    padding: 0 32px;
+  }
+  .marquee-track .dot { color: var(--ink); opacity: 0.4; padding: 0 8px; }
+  @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+
+  /* ── WORK / CASE STUDY ── */
+  .work { padding: 100px 48px; border-bottom: 1px solid var(--wire); }
+
+  .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; gap: 32px; flex-wrap: wrap; }
+  .section-label {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--amber); font-weight: 500;
+    display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
+  }
+  .section-label::before { content: ''; display: block; width: 20px; height: 1px; background: var(--amber); }
+  .section-heading {
+    font-family: var(--serif); font-size: clamp(38px, 5vw, 64px);
+    line-height: 0.95; letter-spacing: 0.04em; color: var(--white);
+  }
+  .section-heading .outline { -webkit-text-stroke: 1px rgba(240,237,232,0.35); color: transparent; }
+
+  .case-study {
+    display: grid; grid-template-columns: 1fr 1fr;
+    border: 1px solid var(--wire);
+    overflow: hidden;
+  }
+
+  .case-preview {
+    background: linear-gradient(135deg, #F5EAE7 0%, #D4A5A0 100%);
+    min-height: 480px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 16px; position: relative; overflow: hidden;
+    padding: 40px;
+  }
+  .case-preview::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .case-preview-inner {
+    position: relative; z-index: 1;
+    background: white;
+    width: 100%; max-width: 320px;
+    border-radius: 4px;
+    box-shadow: 0 24px 60px rgba(0,0,0,0.2);
+    overflow: hidden;
+  }
+  .case-preview-bar {
+    background: #2A2320; height: 28px;
+    display: flex; align-items: center; gap: 6px; padding: 0 12px;
+  }
+  .case-preview-bar span { width: 8px; height: 8px; border-radius: 50%; }
+  .case-preview-bar span:nth-child(1) { background: #FF5F56; }
+  .case-preview-bar span:nth-child(2) { background: #FFBD2E; }
+  .case-preview-bar span:nth-child(3) { background: #27C93F; }
+  .case-preview-body { padding: 20px; background: white; }
+  .case-preview-hero-mock { height: 80px; background: linear-gradient(135deg, #F5EAE7, #D4A5A0); border-radius: 2px; margin-bottom: 12px; display: flex; align-items: center; justify-content: center; }
+  .case-preview-hero-mock p { font-family: 'Bebas Neue', sans-serif; font-size: 18px; color: white; letter-spacing: 0.1em; }
+  .case-preview-line { height: 6px; background: #F0EDE8; border-radius: 2px; margin-bottom: 6px; }
+  .case-preview-line.short { width: 60%; }
+  .case-preview-btn-mock { height: 22px; width: 80px; background: #2A2320; border-radius: 1px; margin-top: 12px; }
+
+  .case-info {
+    padding: 56px 48px;
+    display: flex; flex-direction: column; justify-content: center;
+    border-left: 1px solid var(--wire);
+  }
+  .case-tag { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber); margin-bottom: 16px; font-weight: 500; }
+  .case-title { font-family: var(--serif); font-size: 42px; letter-spacing: 0.04em; color: var(--white); margin-bottom: 20px; line-height: 1; }
+  .case-desc { font-size: 15px; font-weight: 300; line-height: 1.75; color: var(--fog); margin-bottom: 32px; }
+  .case-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 36px; }
+  .pill { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 12px; border: 1px solid var(--wire); color: var(--silver); }
+  .case-link {
+    display: inline-flex; align-items: center; gap: 8px;
+    font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--amber); text-decoration: none; font-weight: 500;
+    border-bottom: 1px solid var(--amber); padding-bottom: 4px;
+    width: fit-content; transition: gap 0.2s;
+  }
+  .case-link:hover { gap: 14px; }
+
+  /* ── SERVICES ── */
+  .services { padding: 100px 48px; border-bottom: 1px solid var(--wire); }
+
+  .services-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    border: 1px solid var(--wire); margin-top: 56px;
+  }
+  .service-item {
+    padding: 44px 36px; border-right: 1px solid var(--wire);
+    position: relative; overflow: hidden;
+    transition: background 0.3s;
+  }
+  .service-item:last-child { border-right: none; }
+  .service-item:hover { background: var(--ink-3); }
+  .service-item::after {
+    content: attr(data-num);
+    position: absolute; top: 16px; right: 20px;
+    font-family: var(--serif); font-size: 64px;
+    color: var(--wire); line-height: 1;
+    transition: color 0.3s;
+  }
+  .service-item:hover::after { color: var(--ink-3); }
+
+  .service-icon { color: var(--amber); margin-bottom: 24px; }
+  .service-title { font-family: var(--serif); font-size: 26px; letter-spacing: 0.04em; color: var(--white); margin-bottom: 14px; line-height: 1.1; }
+  .service-desc { font-size: 14px; font-weight: 300; line-height: 1.7; color: var(--silver); }
+
+  /* ── PROCESS ── */
+  .process { padding: 100px 48px; background: var(--ink-2); border-bottom: 1px solid var(--wire); }
+
+  .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 56px; border: 1px solid var(--wire); }
+  .process-step {
+    padding: 36px 28px; border-right: 1px solid var(--wire);
+    position: relative;
+  }
+  .process-step:last-child { border-right: none; }
+  .process-step-num {
+    font-family: var(--serif); font-size: 48px; color: var(--amber);
+    line-height: 1; margin-bottom: 20px; opacity: 0.7;
+  }
+  .process-step-title { font-family: var(--serif); font-size: 22px; letter-spacing: 0.04em; color: var(--white); margin-bottom: 10px; }
+  .process-step-desc { font-size: 13px; font-weight: 300; line-height: 1.7; color: var(--silver); }
+
+  /* ── ABOUT ── */
+  .about {
+    padding: 100px 48px;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 80px; align-items: center;
+    border-bottom: 1px solid var(--wire);
+  }
+
+  .about-img-wrap { position: relative; }
+  .about-img {
+    width: 100%; aspect-ratio: 4/5;
+    background: var(--ink-3);
+    border: 1px solid var(--wire);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    gap: 12px; color: var(--mist);
+    position: relative; overflow: hidden;
+  }
+  .about-img::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: linear-gradient(var(--wire) 1px, transparent 1px),
+                      linear-gradient(90deg, var(--wire) 1px, transparent 1px);
+    background-size: 40px 40px; opacity: 0.4;
+  }
+  .about-img-label { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); position: relative; z-index: 1; }
+  .about-corner {
+    position: absolute; bottom: -1px; right: -1px;
+    background: var(--amber);
+    width: 60px; height: 60px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .about-name { font-family: var(--serif); font-size: 52px; letter-spacing: 0.04em; color: var(--white); line-height: 0.95; margin-bottom: 8px; }
+  .about-role { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 28px; font-weight: 500; }
+  .about-bio { font-size: 15px; font-weight: 300; line-height: 1.8; color: var(--fog); margin-bottom: 32px; }
+  .about-bio em { font-style: italic; color: var(--paper); }
+
+  .about-list { display: flex; flex-direction: column; gap: 10px; }
+  .about-list-item { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--fog); }
+  .about-list-item::before { content: ''; width: 6px; height: 6px; background: var(--amber); border-radius: 50%; flex-shrink: 0; }
+
+  /* ── CONTACT ── */
+  .contact { padding: 100px 48px; background: var(--paper); }
+  .contact .section-label { color: var(--amber-d); }
+  .contact .section-label::before { background: var(--amber-d); }
+  .contact .section-heading { color: var(--ink); }
+  .contact .section-heading .outline { -webkit-text-stroke: 1px rgba(14,14,14,0.2); }
+
+  .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 64px; margin-top: 56px; align-items: start; }
+  .contact-info p { font-size: 16px; font-weight: 300; line-height: 1.75; color: #555; margin-bottom: 32px; }
+  .contact-detail { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--ink); margin-bottom: 14px; text-decoration: none; }
+  .contact-detail i { color: var(--amber-d); }
+
+  .contact-form { display: flex; flex-direction: column; gap: 16px; }
+  .cf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  .cf-group { display: flex; flex-direction: column; gap: 8px; }
+  .cf-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #888; font-weight: 500; }
+  .cf-input, .cf-select, .cf-textarea {
+    background: white; border: 1px solid #DDD;
+    padding: 14px 16px; font-family: var(--body); font-size: 14px;
+    color: var(--ink); outline: none; transition: border-color 0.2s;
+    width: 100%; border-radius: 0;
+    -webkit-appearance: none;
+  }
+  .cf-input:focus, .cf-select:focus, .cf-textarea:focus { border-color: var(--amber-d); }
+  .cf-input::placeholder, .cf-textarea::placeholder { color: #BBB; }
+  .cf-textarea { resize: vertical; min-height: 100px; }
+  .cf-submit {
+    background: var(--ink); color: var(--white);
+    font-family: var(--body); font-size: 13px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 17px 32px; border: none; cursor: pointer;
+    transition: background 0.2s, transform 0.2s var(--ease);
+    align-self: flex-start;
+  }
+  .cf-submit:hover { background: var(--amber-d); transform: translateY(-1px); }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--ink); border-top: 1px solid var(--wire);
+    padding: 40px 48px;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 16px;
+  }
+  .footer-left { font-size: 13px; color: var(--silver); }
+  .footer-left a { color: var(--fog); text-decoration: none; }
+  .footer-right { font-size: 12px; color: var(--mist); letter-spacing: 0.06em; }
+
+  /* ── MOBILE NAV ── */
+  .mobile-menu {
+    display: none; position: fixed;
+    top: var(--nav-h); left: 0; right: 0; z-index: 999;
+    background: var(--ink-2); border-bottom: 1px solid var(--wire);
+    padding: 28px 32px; flex-direction: column; gap: 20px;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu a { font-size: 15px; color: var(--fog); text-decoration: none; padding: 10px 0; border-bottom: 1px solid var(--wire); letter-spacing: 0.06em; }
+
+  /* ── FADE UP ── */
+  .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.75s var(--ease), transform 0.75s var(--ease); }
+  .fade-up.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 1024px) {
+    nav { padding: 0 24px; }
+    .nav-links { display: none; }
+    .nav-mobile-btn { display: block; }
+    .hero { padding: calc(var(--nav-h) + 40px) 24px 60px; }
+    .work, .services, .process, .about, .contact { padding: 72px 24px; }
+    .case-study { grid-template-columns: 1fr; }
+    .case-info { border-left: none; border-top: 1px solid var(--wire); padding: 36px 28px; }
+    .services-grid { grid-template-columns: 1fr; }
+    .service-item { border-right: none; border-bottom: 1px solid var(--wire); }
+    .process-steps { grid-template-columns: 1fr 1fr; }
+    .about { grid-template-columns: 1fr; gap: 40px; }
+    .contact-grid { grid-template-columns: 1fr; }
+    footer { padding: 32px 24px; }
+  }
+  @media (max-width: 640px) {
+    .hero-headline { font-size: 64px; }
+    .process-steps { grid-template-columns: 1fr; }
+    .cf-row { grid-template-columns: 1fr; }
+    .hero-bottom { gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="cursor" id="cursor"></div>
+
+<!-- NAV -->
+<nav id="navbar">
+  <a class="nav-logo" href="#">
+    <div class="nav-logo-mark"><span></span><span></span><span></span><span></span></div>
+    GRIDWORK STUDIO
+  </a>
+  <div class="nav-links">
+    <a href="#work">Work</a>
+    <a href="#services">Services</a>
+    <a href="#about">About</a>
+    <a href="#contact" class="nav-cta">Start a Project</a>
+  </div>
+  <button class="nav-mobile-btn" onclick="toggleMenu()" aria-label="Menu">
+    <i data-lucide="menu" style="width:22px;height:22px;color:var(--paper)"></i>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#work" onclick="toggleMenu()">Work</a>
+  <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#about" onclick="toggleMenu()">About</a>
+  <a href="#contact" onclick="toggleMenu()">Start a Project</a>
+</div>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-top fade-up">
+    <span class="hero-tag">Web Design Studio</span>
+    <span class="hero-est">Est. 2025 · Atlanta, GA</span>
+  </div>
+  <div class="hero-center">
+    <h1 class="hero-headline fade-up" style="transition-delay:0.1s">
+      <span class="outline">WEB</span><br>
+      DESIGN<br>
+      THAT<br>
+      <span class="amber">WORKS.</span>
+    </h1>
+    <div class="hero-sub-row">
+      <p class="hero-sub fade-up" style="transition-delay:0.2s">Premium websites for local businesses ready to <em>outclass their competition</em> and convert visitors into clients — fast.</p>
+      <div class="hero-actions fade-up" style="transition-delay:0.3s">
+        <a href="#contact" class="btn-primary">Start a Project <i data-lucide="arrow-right" style="width:15px;height:15px"></i></a>
+        <a href="#work" class="btn-outline">See Work</a>
+      </div>
+    </div>
+  </div>
+  <div class="hero-bottom fade-up" style="transition-delay:0.4s">
+    <div class="hero-stat">
+      <div class="hero-stat-num">5-Day</div>
+      <div class="hero-stat-label">Turnaround</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">$0</div>
+      <div class="hero-stat-label">Down to start</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">100%</div>
+      <div class="hero-stat-label">Custom design</div>
+    </div>
+    <div class="hero-stat">
+      <div class="hero-stat-num">ATL</div>
+      <div class="hero-stat-label">Based & built here</div>
+    </div>
+  </div>
+</section>
+
+<!-- MARQUEE -->
+<div class="marquee-wrap">
+  <div class="marquee-track">
+    <span>Med Spas</span><span class="dot">·</span>
+    <span>Law Firms</span><span class="dot">·</span>
+    <span>Real Estate</span><span class="dot">·</span>
+    <span>Wellness Clinics</span><span class="dot">·</span>
+    <span>Local Business</span><span class="dot">·</span>
+    <span>Med Spas</span><span class="dot">·</span>
+    <span>Law Firms</span><span class="dot">·</span>
+    <span>Real Estate</span><span class="dot">·</span>
+    <span>Wellness Clinics</span><span class="dot">·</span>
+    <span>Local Business</span><span class="dot">·</span>
+    <span>Med Spas</span><span class="dot">·</span>
+    <span>Law Firms</span><span class="dot">·</span>
+    <span>Real Estate</span><span class="dot">·</span>
+    <span>Wellness Clinics</span><span class="dot">·</span>
+    <span>Local Business</span><span class="dot">·</span>
+    <span>Med Spas</span><span class="dot">·</span>
+    <span>Law Firms</span><span class="dot">·</span>
+    <span>Real Estate</span><span class="dot">·</span>
+    <span>Wellness Clinics</span><span class="dot">·</span>
+    <span>Local Business</span><span class="dot">·</span>
+  </div>
+</div>
+
+<!-- WORK -->
+<section class="work" id="work">
+  <div class="section-header">
+    <div>
+      <p class="section-label fade-up">Selected Work</p>
+      <h2 class="section-heading fade-up">FEATURED<br><span class="outline">PROJECT</span></h2>
+    </div>
+    <p style="font-size:14px;color:var(--silver);max-width:280px;font-weight:300;line-height:1.7" class="fade-up">Every site we build is custom-designed from scratch — no templates, no shortcuts.</p>
+  </div>
+  <div class="case-study fade-up">
+    <div class="case-preview">
+      <div class="case-preview-inner">
+        <div class="case-preview-bar">
+          <span></span><span></span><span></span>
+        </div>
+        <div class="case-preview-body">
+          <div class="case-preview-hero-mock"><p>LUMIÈRE AESTHETICS</p></div>
+          <div class="case-preview-line"></div>
+          <div class="case-preview-line short"></div>
+          <div class="case-preview-line"></div>
+          <div class="case-preview-line short"></div>
+          <div class="case-preview-btn-mock"></div>
+        </div>
+      </div>
+    </div>
+    <div class="case-info">
+      <p class="case-tag">Medical Spa · Atlanta, GA</p>
+      <h3 class="case-title">LUMIÈRE AESTHETICS</h3>
+      <p class="case-desc">A premium medical spa needed a web presence that matched the quality of their treatments. We built a full-featured site with service pages, provider bio, patient testimonials, and a consultation booking form — delivered in under a week.</p>
+      <div class="case-pills">
+        <span class="pill">Custom Design</span>
+        <span class="pill">Mobile Responsive</span>
+        <span class="pill">Booking Form</span>
+        <span class="pill">5-Day Build</span>
+      </div>
+      <a href="https://lumiere-aesthetics.vercel.app" target="_blank" class="case-link">
+        View Live Site <i data-lucide="external-link" style="width:14px;height:14px"></i>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="services" id="services">
+  <div class="section-header">
+    <div>
+      <p class="section-label fade-up">What We Do</p>
+      <h2 class="section-heading fade-up">THE<br><span class="outline">OFFER</span></h2>
+    </div>
+  </div>
+  <div class="services-grid">
+    <div class="service-item fade-up" data-num="01">
+      <div class="service-icon"><i data-lucide="layout" style="width:24px;height:24px"></i></div>
+      <h3 class="service-title">Custom Website Design</h3>
+      <p class="service-desc">A fully custom site built around your brand, your clients, and your goals. No page builders, no generic themes — every pixel designed with intention. Delivered in 5–7 business days.</p>
+    </div>
+    <div class="service-item fade-up" style="transition-delay:0.1s" data-num="02">
+      <div class="service-icon"><i data-lucide="smartphone" style="width:24px;height:24px"></i></div>
+      <h3 class="service-title">Mobile-First Development</h3>
+      <p class="service-desc">Over 70% of your clients find you on their phone. Every site we build is flawless on mobile — fast-loading, touch-optimized, and designed to convert on any screen size.</p>
+    </div>
+    <div class="service-item fade-up" style="transition-delay:0.2s" data-num="03">
+      <div class="service-icon"><i data-lucide="refresh-cw" style="width:24px;height:24px"></i></div>
+      <h3 class="service-title">Ongoing Care Plans</h3>
+      <p class="service-desc">Monthly retainer plans for updates, edits, and performance monitoring. Your site stays current, secure, and working hard — without you having to think about it.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process">
+  <div class="section-header">
+    <div>
+      <p class="section-label fade-up">How It Works</p>
+      <h2 class="section-heading fade-up">THE<br><span class="outline">PROCESS</span></h2>
+    </div>
+  </div>
+  <div class="process-steps">
+    <div class="process-step fade-up">
+      <div class="process-step-num">01</div>
+      <h3 class="process-step-title">Discovery Call</h3>
+      <p class="process-step-desc">A 30-minute call to understand your business, your clients, and what your current site is costing you. No hard sell — just clarity on whether we're a fit.</p>
+    </div>
+    <div class="process-step fade-up" style="transition-delay:0.1s">
+      <div class="process-step-num">02</div>
+      <h3 class="process-step-title">Design & Build</h3>
+      <p class="process-step-desc">We get to work. Custom design, full development, mobile optimization. You see the first draft within 72 hours. Two rounds of revisions included.</p>
+    </div>
+    <div class="process-step fade-up" style="transition-delay:0.2s">
+      <div class="process-step-num">03</div>
+      <h3 class="process-step-title">Review & Refine</h3>
+      <p class="process-step-desc">You review the live preview link and request changes. We refine until it's exactly right. Most clients are done in one round.</p>
+    </div>
+    <div class="process-step fade-up" style="transition-delay:0.3s">
+      <div class="process-step-num">04</div>
+      <h3 class="process-step-title">Launch</h3>
+      <p class="process-step-desc">We handle deployment and go-live. Your new site is live, fast, and ready to work. Ongoing support available from day one.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-img-wrap fade-up">
+    <div class="about-img">
+      <i data-lucide="user" style="width:32px;height:32px;position:relative;z-index:1"></i>
+      <span class="about-img-label">Photo Coming Soon</span>
+      <div class="about-corner">
+        <i data-lucide="pen-tool" style="width:22px;height:22px;color:var(--ink)"></i>
+      </div>
+    </div>
+  </div>
+  <div class="fade-up" style="transition-delay:0.15s">
+    <p class="section-label">The Person Behind It</p>
+    <h2 class="about-name">MATTHEW<br>JANCI</h2>
+    <p class="about-role">Founder, Gridwork Studio</p>
+    <p class="about-bio">I'm a web designer and developer based in Atlanta, Georgia. I started Gridwork Studio with one belief: <em>local businesses deserve websites as good as the national brands they compete with.</em></p>
+    <p class="about-bio">I work with a small number of clients at a time — which means fast turnarounds, direct communication, and a site that actually reflects your business instead of a template we reskinned.</p>
+    <div class="about-list">
+      <div class="about-list-item">Custom-built — no page builders or themes</div>
+      <div class="about-list-item">Direct communication, no account managers</div>
+      <div class="about-list-item">Atlanta-based, available for local meetings</div>
+      <div class="about-list-item">5-day delivery on standard projects</div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <p class="section-label fade-up">Get In Touch</p>
+  <h2 class="section-heading fade-up">START A<br><span class="outline">PROJECT</span></h2>
+  <div class="contact-grid">
+    <div class="fade-up">
+      <p>Tell me about your business and what you're looking for. I'll get back to you within 24 hours with honest thoughts on how I can help — and a ballpark on price.</p>
+      <a href="mailto:hello@gridworkstudio.com" class="contact-detail">
+        <i data-lucide="mail" style="width:16px;height:16px"></i>
+        hello@gridworkstudio.com
+      </a>
+      <a href="tel:4045550000" class="contact-detail">
+        <i data-lucide="phone" style="width:16px;height:16px"></i>
+        (404) 555-0000
+      </a>
+      <div class="contact-detail">
+        <i data-lucide="map-pin" style="width:16px;height:16px"></i>
+        Atlanta, Georgia
+      </div>
+    </div>
+    <div class="contact-form fade-up" style="transition-delay:0.15s">
+      <div class="cf-row">
+        <div class="cf-group">
+          <label class="cf-label">Your Name</label>
+          <input class="cf-input" type="text" placeholder="Jane Smith">
+        </div>
+        <div class="cf-group">
+          <label class="cf-label">Business Name</label>
+          <input class="cf-input" type="text" placeholder="Smith Med Spa">
+        </div>
+      </div>
+      <div class="cf-group">
+        <label class="cf-label">Email</label>
+        <input class="cf-input" type="email" placeholder="jane@smithmedspa.com">
+      </div>
+      <div class="cf-group">
+        <label class="cf-label">What do you need?</label>
+        <select class="cf-select">
+          <option value="" disabled selected>Select a service...</option>
+          <option>New website from scratch</option>
+          <option>Redesign of existing site</option>
+          <option>Monthly care plan only</option>
+          <option>Not sure — let's talk</option>
+        </select>
+      </div>
+      <div class="cf-group">
+        <label class="cf-label">Anything else?</label>
+        <textarea class="cf-textarea" placeholder="Tell me a bit about your business and timeline..."></textarea>
+      </div>
+      <button class="cf-submit" onclick="handleSubmit(this)">Send Message →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-left">
+    © 2025 Gridwork Studio · <a href="#">Matthew Janci</a>
+  </div>
+  <div class="footer-right">ATLANTA, GEORGIA</div>
+</footer>
+
+<script>
+  lucide.createIcons();
+
+  // Cursor
+  const cursor = document.getElementById('cursor');
+  document.addEventListener('mousemove', e => {
+    cursor.style.left = e.clientX + 'px';
+    cursor.style.top = e.clientY + 'px';
+  });
+  document.querySelectorAll('a, button, .service-item, .process-step').forEach(el => {
+    el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
+    el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
+  });
+
+  // Nav scroll
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 10));
+
+  // Mobile menu
+  function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
+
+  // Fade up
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
+
+  // Smooth scroll
+  document.querySelectorAll('a[href^="#"]').forEach(a => {
+    a.addEventListener('click', e => {
+      const t = document.querySelector(a.getAttribute('href'));
+      if (t) { e.preventDefault(); t.scrollIntoView({ behavior: 'smooth' }); }
+    });
+  });
+
+  // Form
+  function handleSubmit(btn) {
+    btn.textContent = 'Sending...';
+    btn.disabled = true;
+    setTimeout(() => {
+      btn.textContent = 'Message Sent — I\'ll be in touch within 24hrs.';
+      btn.style.background = '#555';
+    }, 1200);
+  }
+</script>
+</body>
+</html>
