@@ -504,7 +504,7 @@
 <section class="hero">
   <div class="hero-top fade-up">
     <span class="hero-tag">Web Design Studio</span>
-    <span class="hero-est">Est. 2025 · Atlanta, GA</span>
+    <span class="hero-est">Est. 2026 · Atlanta, GA</span>
   </div>
   <div class="hero-center">
     <h1 class="hero-headline fade-up" style="transition-delay:0.1s">
@@ -743,7 +743,7 @@
         <label class="cf-label">Anything else?</label>
         <textarea class="cf-textarea" placeholder="Tell me a bit about your business and timeline..."></textarea>
       </div>
-      <button class="cf-submit" onclick="handleSubmit(this)">Send Message →</button>
+      <button class="cf-submit" id="cfSubmit" onclick="handleSubmit(event)">Send Message →</button>
     </div>
   </div>
 </section>
@@ -751,7 +751,7 @@
 <!-- FOOTER -->
 <footer>
   <div class="footer-left">
-    © 2025 Gridwork Studio · <a href="#">Matthew Janci</a>
+    © 2026 Gridwork Studio · <a href="#">Matthew Janci</a>
   </div>
   <div class="footer-right">ATLANTA, GEORGIA</div>
 </footer>
@@ -792,13 +792,43 @@
   });
 
   // Form
-  function handleSubmit(btn) {
+  async function handleSubmit(e) {
+    e.preventDefault();
+    const btn = document.getElementById('cfSubmit');
+    const inputs = document.querySelectorAll('.cf-input, .cf-select, .cf-textarea');
+    const [firstName, lastName] = inputs[0].value.trim().split(' ');
+    const data = {
+      accessKey: 'sf_135631e4fa88dff3c6a2eb58',
+      email: inputs[2].value.trim(),
+      name: inputs[0].value.trim(),
+      subject: 'New Gridwork Studio Inquiry — ' + inputs[1].value.trim(),
+      message: `Business: ${inputs[1].value}\nService: ${inputs[3].value}\nMessage: ${inputs[4].value}`
+    };
+    if (!data.email || !data.name) {
+      btn.textContent = 'Please fill in your name and email.';
+      return;
+    }
     btn.textContent = 'Sending...';
     btn.disabled = true;
-    setTimeout(() => {
-      btn.textContent = 'Message Sent — I\'ll be in touch within 24hrs.';
-      btn.style.background = '#555';
-    }, 1200);
+    try {
+      const res = await fetch('https://api.staticforms.xyz/submit', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
+      const json = await res.json();
+      if (json.success) {
+        btn.textContent = "Message Sent — I'll be in touch within 24hrs.";
+        btn.style.background = '#555';
+        inputs.forEach(i => i.value = '');
+      } else {
+        btn.textContent = 'Something went wrong — email me directly.';
+        btn.disabled = false;
+      }
+    } catch {
+      btn.textContent = 'Something went wrong — email me directly.';
+      btn.disabled = false;
+    }
   }
 </script>
 </body>
