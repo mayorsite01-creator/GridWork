@@ -796,31 +796,34 @@
     e.preventDefault();
     const btn = document.getElementById('cfSubmit');
     const inputs = document.querySelectorAll('.cf-input, .cf-select, .cf-textarea');
-    const [firstName, lastName] = inputs[0].value.trim().split(' ');
-    const data = {
-      accessKey: 'sf_135631e4fa88dff3c6a2eb58',
-      email: inputs[2].value.trim(),
-      name: inputs[0].value.trim(),
-      subject: 'New Gridwork Studio Inquiry — ' + inputs[1].value.trim(),
-      message: `Business: ${inputs[1].value}\nService: ${inputs[3].value}\nMessage: ${inputs[4].value}`
-    };
-    if (!data.email || !data.name) {
+    const name = inputs[0].value.trim();
+    const business = inputs[1].value.trim();
+    const email = inputs[2].value.trim();
+    const service = inputs[3].value.trim();
+    const message = inputs[4].value.trim();
+    if (!email || !name) {
       btn.textContent = 'Please fill in your name and email.';
+      setTimeout(() => { btn.textContent = 'Send Message →'; }, 3000);
       return;
     }
     btn.textContent = 'Sending...';
     btn.disabled = true;
     try {
-      const res = await fetch('https://api.staticforms.xyz/submit', {
+      const res = await fetch('https://formspree.io/f/xpqneeol', {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(data)
+        headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, business, service, message })
       });
       const json = await res.json();
-      if (json.success) {
+      if (json.ok) {
         btn.textContent = "Message Sent — I'll be in touch within 24hrs.";
         btn.style.background = '#555';
         inputs.forEach(i => i.value = '');
+        setTimeout(() => {
+          btn.textContent = 'Send Message →';
+          btn.style.background = '';
+          btn.disabled = false;
+        }, 4000);
       } else {
         btn.textContent = 'Something went wrong — email me directly.';
         btn.disabled = false;
