@@ -40,7 +40,6 @@
     cursor: none;
   }
 
-  /* ── CUSTOM CURSOR ── */
   .cursor {
     position: fixed; z-index: 9999; pointer-events: none;
     width: 10px; height: 10px;
@@ -52,7 +51,6 @@
   .cursor.hover { width: 36px; height: 36px; background: transparent; border: 1.5px solid var(--amber); }
   @media (pointer: coarse) { .cursor { display: none; } body { cursor: auto; } }
 
-  /* ── GRAIN OVERLAY ── */
   body::before {
     content: '';
     position: fixed; inset: 0; z-index: 9998; pointer-events: none;
@@ -60,7 +58,6 @@
     opacity: 0.032;
   }
 
-  /* ── NAV ── */
   nav {
     position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
     height: var(--nav-h);
@@ -108,7 +105,6 @@
 
   .nav-mobile-btn { display: none; background: none; border: none; cursor: pointer; }
 
-  /* ── HERO ── */
   .hero {
     min-height: 100vh;
     padding: calc(var(--nav-h) + 60px) 48px 80px;
@@ -119,7 +115,6 @@
     border-bottom: 1px solid var(--wire);
   }
 
-  /* background grid lines */
   .hero::after {
     content: '';
     position: absolute; inset: 0; z-index: 0;
@@ -154,20 +149,14 @@
     color: var(--white);
     margin-bottom: 0;
   }
-  .hero-headline .outline {
-    -webkit-text-stroke: 1.5px var(--paper-2);
-    color: transparent;
-  }
+  .hero-headline .outline { -webkit-text-stroke: 1.5px var(--paper-2); color: transparent; }
   .hero-headline .amber { color: var(--amber); }
 
   .hero-sub-row {
     display: flex; align-items: flex-end; justify-content: space-between;
     margin-top: 40px; gap: 40px; flex-wrap: wrap;
   }
-  .hero-sub {
-    font-size: 16px; font-weight: 300; line-height: 1.7;
-    color: var(--fog); max-width: 400px;
-  }
+  .hero-sub { font-size: 16px; font-weight: 300; line-height: 1.7; color: var(--fog); max-width: 400px; }
   .hero-sub em { font-style: italic; color: var(--paper); }
 
   .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; align-items: center; }
@@ -198,32 +187,19 @@
     border-top: 1px solid var(--wire);
     flex-wrap: wrap;
   }
-  .hero-stat { }
-  .hero-stat-num {
-    font-family: var(--serif); font-size: 36px;
-    color: var(--white); letter-spacing: 0.04em;
-  }
+  .hero-stat-num { font-family: var(--serif); font-size: 36px; color: var(--white); letter-spacing: 0.04em; }
   .hero-stat-label { font-size: 12px; color: var(--silver); letter-spacing: 0.08em; text-transform: uppercase; margin-top: 2px; }
 
-  /* ── MARQUEE ── */
   .marquee-wrap {
     background: var(--amber); padding: 14px 0;
     overflow: hidden; white-space: nowrap;
     border-bottom: 1px solid var(--amber-d);
   }
-  .marquee-track {
-    display: inline-flex; gap: 0;
-    animation: marquee 28s linear infinite;
-  }
-  .marquee-track span {
-    font-family: var(--serif); font-size: 15px;
-    letter-spacing: 0.14em; color: var(--ink);
-    padding: 0 32px;
-  }
+  .marquee-track { display: inline-flex; gap: 0; animation: marquee 28s linear infinite; }
+  .marquee-track span { font-family: var(--serif); font-size: 15px; letter-spacing: 0.14em; color: var(--ink); padding: 0 32px; }
   .marquee-track .dot { color: var(--ink); opacity: 0.4; padding: 0 8px; }
   @keyframes marquee { from { transform: translateX(0); } to { transform: translateX(-50%); } }
 
-  /* ── WORK / CASE STUDY ── */
   .work { padding: 100px 48px; border-bottom: 1px solid var(--wire); }
 
   .section-header { display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 56px; gap: 32px; flex-wrap: wrap; }
@@ -233,45 +209,25 @@
     display: flex; align-items: center; gap: 10px; margin-bottom: 12px;
   }
   .section-label::before { content: ''; display: block; width: 20px; height: 1px; background: var(--amber); }
-  .section-heading {
-    font-family: var(--serif); font-size: clamp(38px, 5vw, 64px);
-    line-height: 0.95; letter-spacing: 0.04em; color: var(--white);
-  }
+  .section-heading { font-family: var(--serif); font-size: clamp(38px, 5vw, 64px); line-height: 0.95; letter-spacing: 0.04em; color: var(--white); }
   .section-heading .outline { -webkit-text-stroke: 1px rgba(240,237,232,0.35); color: transparent; }
 
-  .case-study {
-    display: grid; grid-template-columns: 1fr 1fr;
-    border: 1px solid var(--wire);
-    overflow: hidden;
-  }
+  .case-study { display: grid; grid-template-columns: 1fr 1fr; border: 1px solid var(--wire); overflow: hidden; }
 
   .case-preview {
     background: linear-gradient(135deg, #F5EAE7 0%, #D4A5A0 100%);
     min-height: 480px;
     display: flex; flex-direction: column;
     align-items: center; justify-content: center;
-    gap: 16px; position: relative; overflow: hidden;
-    padding: 40px;
+    gap: 16px; position: relative; overflow: hidden; padding: 40px;
   }
   .case-preview::before {
-    content: '';
-    position: absolute; inset: 0;
-    background-image: linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px),
-                      linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
+    content: ''; position: absolute; inset: 0;
+    background-image: linear-gradient(rgba(255,255,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.06) 1px, transparent 1px);
     background-size: 40px 40px;
   }
-  .case-preview-inner {
-    position: relative; z-index: 1;
-    background: white;
-    width: 100%; max-width: 320px;
-    border-radius: 4px;
-    box-shadow: 0 24px 60px rgba(0,0,0,0.2);
-    overflow: hidden;
-  }
-  .case-preview-bar {
-    background: #2A2320; height: 28px;
-    display: flex; align-items: center; gap: 6px; padding: 0 12px;
-  }
+  .case-preview-inner { position: relative; z-index: 1; background: white; width: 100%; max-width: 320px; border-radius: 4px; box-shadow: 0 24px 60px rgba(0,0,0,0.2); overflow: hidden; }
+  .case-preview-bar { background: #2A2320; height: 28px; display: flex; align-items: center; gap: 6px; padding: 0 12px; }
   .case-preview-bar span { width: 8px; height: 8px; border-radius: 50%; }
   .case-preview-bar span:nth-child(1) { background: #FF5F56; }
   .case-preview-bar span:nth-child(2) { background: #FFBD2E; }
@@ -283,109 +239,137 @@
   .case-preview-line.short { width: 60%; }
   .case-preview-btn-mock { height: 22px; width: 80px; background: #2A2320; border-radius: 1px; margin-top: 12px; }
 
-  .case-info {
-    padding: 56px 48px;
-    display: flex; flex-direction: column; justify-content: center;
-    border-left: 1px solid var(--wire);
-  }
+  .case-info { padding: 56px 48px; display: flex; flex-direction: column; justify-content: center; border-left: 1px solid var(--wire); }
   .case-tag { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--amber); margin-bottom: 16px; font-weight: 500; }
   .case-title { font-family: var(--serif); font-size: 42px; letter-spacing: 0.04em; color: var(--white); margin-bottom: 20px; line-height: 1; }
   .case-desc { font-size: 15px; font-weight: 300; line-height: 1.75; color: var(--fog); margin-bottom: 32px; }
   .case-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 36px; }
   .pill { font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; padding: 6px 12px; border: 1px solid var(--wire); color: var(--silver); }
-  .case-link {
-    display: inline-flex; align-items: center; gap: 8px;
-    font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase;
-    color: var(--amber); text-decoration: none; font-weight: 500;
-    border-bottom: 1px solid var(--amber); padding-bottom: 4px;
-    width: fit-content; transition: gap 0.2s;
-  }
+  .case-link { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber); text-decoration: none; font-weight: 500; border-bottom: 1px solid var(--amber); padding-bottom: 4px; width: fit-content; transition: gap 0.2s; }
   .case-link:hover { gap: 14px; }
 
-  /* ── SERVICES ── */
   .services { padding: 100px 48px; border-bottom: 1px solid var(--wire); }
-
-  .services-grid {
-    display: grid; grid-template-columns: repeat(3, 1fr);
-    border: 1px solid var(--wire); margin-top: 56px;
-  }
-  .service-item {
-    padding: 44px 36px; border-right: 1px solid var(--wire);
-    position: relative; overflow: hidden;
-    transition: background 0.3s;
-  }
+  .services-grid { display: grid; grid-template-columns: repeat(3, 1fr); border: 1px solid var(--wire); margin-top: 56px; }
+  .service-item { padding: 44px 36px; border-right: 1px solid var(--wire); position: relative; overflow: hidden; transition: background 0.3s; }
   .service-item:last-child { border-right: none; }
   .service-item:hover { background: var(--ink-3); }
-  .service-item::after {
-    content: attr(data-num);
-    position: absolute; top: 16px; right: 20px;
-    font-family: var(--serif); font-size: 64px;
-    color: var(--wire); line-height: 1;
-    transition: color 0.3s;
-  }
+  .service-item::after { content: attr(data-num); position: absolute; top: 16px; right: 20px; font-family: var(--serif); font-size: 64px; color: var(--wire); line-height: 1; transition: color 0.3s; }
   .service-item:hover::after { color: var(--ink-3); }
-
   .service-icon { color: var(--amber); margin-bottom: 24px; }
   .service-title { font-family: var(--serif); font-size: 26px; letter-spacing: 0.04em; color: var(--white); margin-bottom: 14px; line-height: 1.1; }
   .service-desc { font-size: 14px; font-weight: 300; line-height: 1.7; color: var(--silver); }
 
-  /* ── PROCESS ── */
   .process { padding: 100px 48px; background: var(--ink-2); border-bottom: 1px solid var(--wire); }
-
   .process-steps { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 56px; border: 1px solid var(--wire); }
-  .process-step {
-    padding: 36px 28px; border-right: 1px solid var(--wire);
-    position: relative;
-  }
+  .process-step { padding: 36px 28px; border-right: 1px solid var(--wire); position: relative; }
   .process-step:last-child { border-right: none; }
-  .process-step-num {
-    font-family: var(--serif); font-size: 48px; color: var(--amber);
-    line-height: 1; margin-bottom: 20px; opacity: 0.7;
-  }
+  .process-step-num { font-family: var(--serif); font-size: 48px; color: var(--amber); line-height: 1; margin-bottom: 20px; opacity: 0.7; }
   .process-step-title { font-family: var(--serif); font-size: 22px; letter-spacing: 0.04em; color: var(--white); margin-bottom: 10px; }
   .process-step-desc { font-size: 13px; font-weight: 300; line-height: 1.7; color: var(--silver); }
 
-  /* ── ABOUT ── */
-  .about {
-    padding: 100px 48px;
-    display: grid; grid-template-columns: 1fr 1fr;
-    gap: 80px; align-items: center;
-    border-bottom: 1px solid var(--wire);
-  }
-
+  .about { padding: 100px 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; border-bottom: 1px solid var(--wire); }
   .about-img-wrap { position: relative; }
-  .about-img {
-    width: 100%; aspect-ratio: 4/5;
-    background: var(--ink-3);
-    border: 1px solid var(--wire);
-    display: flex; flex-direction: column;
-    align-items: center; justify-content: center;
-    gap: 12px; color: var(--mist);
-    position: relative; overflow: hidden;
-  }
-  .about-img::before {
-    content: '';
-    position: absolute; inset: 0;
-    background-image: linear-gradient(var(--wire) 1px, transparent 1px),
-                      linear-gradient(90deg, var(--wire) 1px, transparent 1px);
-    background-size: 40px 40px; opacity: 0.4;
-  }
+  .about-img { width: 100%; aspect-ratio: 4/5; background: var(--ink-3); border: 1px solid var(--wire); display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: var(--mist); position: relative; overflow: hidden; }
+  .about-img::before { content: ''; position: absolute; inset: 0; background-image: linear-gradient(var(--wire) 1px, transparent 1px), linear-gradient(90deg, var(--wire) 1px, transparent 1px); background-size: 40px 40px; opacity: 0.4; }
   .about-img-label { font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mist); position: relative; z-index: 1; }
-  .about-corner {
-    position: absolute; bottom: -1px; right: -1px;
-    background: var(--amber);
-    width: 60px; height: 60px;
-    display: flex; align-items: center; justify-content: center;
-  }
-
+  .about-corner { position: absolute; bottom: -1px; right: -1px; background: var(--amber); width: 60px; height: 60px; display: flex; align-items: center; justify-content: center; }
   .about-name { font-family: var(--serif); font-size: 52px; letter-spacing: 0.04em; color: var(--white); line-height: 0.95; margin-bottom: 8px; }
   .about-role { font-size: 13px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); margin-bottom: 28px; font-weight: 500; }
   .about-bio { font-size: 15px; font-weight: 300; line-height: 1.8; color: var(--fog); margin-bottom: 32px; }
   .about-bio em { font-style: italic; color: var(--paper); }
-
   .about-list { display: flex; flex-direction: column; gap: 10px; }
   .about-list-item { display: flex; align-items: center; gap: 12px; font-size: 14px; color: var(--fog); }
   .about-list-item::before { content: ''; width: 6px; height: 6px; background: var(--amber); border-radius: 50%; flex-shrink: 0; }
+
+  /* ── PRICING ── */
+  .pricing { padding: 100px 48px; background: var(--ink-2); border-bottom: 1px solid var(--wire); }
+
+  .pricing-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 2px; background: var(--wire);
+    border: 1px solid var(--wire);
+    margin-top: 56px;
+  }
+
+  .pricing-card {
+    background: var(--ink);
+    padding: 52px 44px;
+    position: relative;
+    display: flex; flex-direction: column;
+  }
+
+  .pricing-card.featured {
+    background: var(--ink-3);
+  }
+
+  .pricing-badge {
+    position: absolute; top: 28px; right: 28px;
+    font-size: 10px; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--ink); background: var(--amber);
+    padding: 4px 10px;
+  }
+
+  .pricing-type {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--amber); font-weight: 500; margin-bottom: 16px;
+  }
+
+  .pricing-price {
+    font-family: var(--serif); font-size: 72px;
+    color: var(--white); letter-spacing: 0.02em;
+    line-height: 1; margin-bottom: 4px;
+  }
+
+  .pricing-price-sub {
+    font-size: 13px; color: var(--silver); font-weight: 300;
+    margin-bottom: 32px; letter-spacing: 0.04em;
+  }
+
+  .pricing-divider {
+    height: 1px; background: var(--wire); margin-bottom: 32px;
+  }
+
+  .pricing-features { display: flex; flex-direction: column; gap: 14px; flex: 1; }
+
+  .pricing-feature {
+    display: flex; align-items: flex-start; gap: 12px;
+    font-size: 14px; font-weight: 300; line-height: 1.5;
+    color: var(--fog);
+  }
+
+  .pricing-feature-dot {
+    width: 5px; height: 5px; background: var(--amber);
+    border-radius: 50%; flex-shrink: 0; margin-top: 7px;
+  }
+
+  .pricing-cta {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: var(--amber); color: var(--ink);
+    font-family: var(--body); font-size: 12px; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; text-decoration: none;
+    padding: 14px 24px; border: none; cursor: pointer;
+    margin-top: 36px; align-self: flex-start;
+    transition: background 0.2s, transform 0.2s var(--ease);
+  }
+  .pricing-cta:hover { background: var(--white); transform: translateY(-2px); }
+
+  .pricing-note {
+    font-size: 12px; color: var(--mist); font-weight: 300;
+    margin-top: 14px; line-height: 1.6;
+  }
+
+  .pricing-faq { margin-top: 56px; border: 1px solid var(--wire); }
+
+  .faq-item {
+    padding: 28px 36px; border-bottom: 1px solid var(--wire);
+    display: grid; grid-template-columns: 1fr 2fr; gap: 40px;
+    align-items: start;
+  }
+  .faq-item:last-child { border-bottom: none; }
+
+  .faq-q { font-size: 13px; font-weight: 500; color: var(--white); letter-spacing: 0.02em; }
+  .faq-a { font-size: 14px; font-weight: 300; line-height: 1.7; color: var(--silver); }
 
   /* ── CONTACT ── */
   .contact { padding: 100px 48px; background: var(--paper); }
@@ -403,64 +387,39 @@
   .cf-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   .cf-group { display: flex; flex-direction: column; gap: 8px; }
   .cf-label { font-size: 11px; letter-spacing: 0.12em; text-transform: uppercase; color: #888; font-weight: 500; }
-  .cf-input, .cf-select, .cf-textarea {
-    background: white; border: 1px solid #DDD;
-    padding: 14px 16px; font-family: var(--body); font-size: 14px;
-    color: var(--ink); outline: none; transition: border-color 0.2s;
-    width: 100%; border-radius: 0;
-    -webkit-appearance: none;
-  }
+  .cf-input, .cf-select, .cf-textarea { background: white; border: 1px solid #DDD; padding: 14px 16px; font-family: var(--body); font-size: 14px; color: var(--ink); outline: none; transition: border-color 0.2s; width: 100%; border-radius: 0; -webkit-appearance: none; }
   .cf-input:focus, .cf-select:focus, .cf-textarea:focus { border-color: var(--amber-d); }
   .cf-input::placeholder, .cf-textarea::placeholder { color: #BBB; }
   .cf-textarea { resize: vertical; min-height: 100px; }
-  .cf-submit {
-    background: var(--ink); color: var(--white);
-    font-family: var(--body); font-size: 13px; font-weight: 500;
-    letter-spacing: 0.1em; text-transform: uppercase;
-    padding: 17px 32px; border: none; cursor: pointer;
-    transition: background 0.2s, transform 0.2s var(--ease);
-    align-self: flex-start;
-  }
+  .cf-submit { background: var(--ink); color: var(--white); font-family: var(--body); font-size: 13px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; padding: 17px 32px; border: none; cursor: pointer; transition: background 0.2s, transform 0.2s var(--ease); align-self: flex-start; }
   .cf-submit:hover { background: var(--amber-d); transform: translateY(-1px); }
 
-  /* ── FOOTER ── */
-  footer {
-    background: var(--ink); border-top: 1px solid var(--wire);
-    padding: 40px 48px;
-    display: flex; justify-content: space-between; align-items: center;
-    flex-wrap: wrap; gap: 16px;
-  }
+  footer { background: var(--ink); border-top: 1px solid var(--wire); padding: 40px 48px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 16px; }
   .footer-left { font-size: 13px; color: var(--silver); }
   .footer-left a { color: var(--fog); text-decoration: none; }
   .footer-right { font-size: 12px; color: var(--mist); letter-spacing: 0.06em; }
 
-  /* ── MOBILE NAV ── */
-  .mobile-menu {
-    display: none; position: fixed;
-    top: var(--nav-h); left: 0; right: 0; z-index: 999;
-    background: var(--ink-2); border-bottom: 1px solid var(--wire);
-    padding: 28px 32px; flex-direction: column; gap: 20px;
-  }
+  .mobile-menu { display: none; position: fixed; top: var(--nav-h); left: 0; right: 0; z-index: 999; background: var(--ink-2); border-bottom: 1px solid var(--wire); padding: 28px 32px; flex-direction: column; gap: 20px; }
   .mobile-menu.open { display: flex; }
   .mobile-menu a { font-size: 15px; color: var(--fog); text-decoration: none; padding: 10px 0; border-bottom: 1px solid var(--wire); letter-spacing: 0.06em; }
 
-  /* ── FADE UP ── */
   .fade-up { opacity: 0; transform: translateY(28px); transition: opacity 0.75s var(--ease), transform 0.75s var(--ease); }
   .fade-up.visible { opacity: 1; transform: translateY(0); }
 
-  /* ── RESPONSIVE ── */
   @media (max-width: 1024px) {
     nav { padding: 0 24px; }
     .nav-links { display: none; }
     .nav-mobile-btn { display: block; }
     .hero { padding: calc(var(--nav-h) + 40px) 24px 60px; }
-    .work, .services, .process, .about, .contact { padding: 72px 24px; }
+    .work, .services, .process, .about, .pricing, .contact { padding: 72px 24px; }
     .case-study { grid-template-columns: 1fr; }
     .case-info { border-left: none; border-top: 1px solid var(--wire); padding: 36px 28px; }
     .services-grid { grid-template-columns: 1fr; }
     .service-item { border-right: none; border-bottom: 1px solid var(--wire); }
     .process-steps { grid-template-columns: 1fr 1fr; }
     .about { grid-template-columns: 1fr; gap: 40px; }
+    .pricing-grid { grid-template-columns: 1fr; }
+    .faq-item { grid-template-columns: 1fr; gap: 12px; }
     .contact-grid { grid-template-columns: 1fr; }
     footer { padding: 32px 24px; }
   }
@@ -476,7 +435,6 @@
 
 <div class="cursor" id="cursor"></div>
 
-<!-- NAV -->
 <nav id="navbar">
   <a class="nav-logo" href="#">
     <div class="nav-logo-mark"><span></span><span></span><span></span><span></span></div>
@@ -485,6 +443,7 @@
   <div class="nav-links">
     <a href="#work">Work</a>
     <a href="#services">Services</a>
+    <a href="#pricing">Pricing</a>
     <a href="#about">About</a>
     <a href="#contact" class="nav-cta">Start a Project</a>
   </div>
@@ -496,11 +455,11 @@
 <div class="mobile-menu" id="mobileMenu">
   <a href="#work" onclick="toggleMenu()">Work</a>
   <a href="#services" onclick="toggleMenu()">Services</a>
+  <a href="#pricing" onclick="toggleMenu()">Pricing</a>
   <a href="#about" onclick="toggleMenu()">About</a>
   <a href="#contact" onclick="toggleMenu()">Start a Project</a>
 </div>
 
-<!-- HERO -->
 <section class="hero">
   <div class="hero-top fade-up">
     <span class="hero-tag">Web Design Studio</span>
@@ -541,7 +500,6 @@
   </div>
 </section>
 
-<!-- MARQUEE -->
 <div class="marquee-wrap">
   <div class="marquee-track">
     <span>Med Spas</span><span class="dot">·</span>
@@ -567,7 +525,6 @@
   </div>
 </div>
 
-<!-- WORK -->
 <section class="work" id="work">
   <div class="section-header">
     <div>
@@ -579,9 +536,7 @@
   <div class="case-study fade-up">
     <div class="case-preview">
       <div class="case-preview-inner">
-        <div class="case-preview-bar">
-          <span></span><span></span><span></span>
-        </div>
+        <div class="case-preview-bar"><span></span><span></span><span></span></div>
         <div class="case-preview-body">
           <div class="case-preview-hero-mock"><p>LUMIÈRE AESTHETICS</p></div>
           <div class="case-preview-line"></div>
@@ -609,7 +564,6 @@
   </div>
 </section>
 
-<!-- SERVICES -->
 <section class="services" id="services">
   <div class="section-header">
     <div>
@@ -636,7 +590,6 @@
   </div>
 </section>
 
-<!-- PROCESS -->
 <section class="process">
   <div class="section-header">
     <div>
@@ -668,7 +621,6 @@
   </div>
 </section>
 
-<!-- ABOUT -->
 <section class="about" id="about">
   <div class="about-img-wrap fade-up">
     <div class="about-img">
@@ -694,7 +646,72 @@
   </div>
 </section>
 
-<!-- CONTACT -->
+<!-- PRICING -->
+<section class="pricing" id="pricing">
+  <div class="section-header">
+    <div>
+      <p class="section-label fade-up">Investment</p>
+      <h2 class="section-heading fade-up">STRAIGHT<br><span class="outline">FORWARD</span></h2>
+    </div>
+    <p style="font-size:14px;color:var(--silver);max-width:300px;font-weight:300;line-height:1.7" class="fade-up">No surprise fees, no retainer traps. Two options, both priced so that one new client pays for it many times over.</p>
+  </div>
+
+  <div class="pricing-grid">
+    <div class="pricing-card featured fade-up">
+      <span class="pricing-badge">Most Popular</span>
+      <p class="pricing-type">The Site</p>
+      <div class="pricing-price">$3,500</div>
+      <p class="pricing-price-sub">Split into two payments — $1,750 upfront, $1,750 on launch day</p>
+      <div class="pricing-divider"></div>
+      <div class="pricing-features">
+        <div class="pricing-feature"><div class="pricing-feature-dot"></div>Fully custom design, built from scratch — no templates</div>
+        <div class="pricing-feature"><div class="pricing-feature-dot"></div>Mobile-first development, optimized to convert on every device</div>
+        <div class="pricing-feature"><div class="pricing-feature-dot"></div>First draft delivered within 72 hours</div>
+        <div class="pricing-feature"><div class="pricing-feature-dot"></div>Two full rounds of revisions included</div>
+        <div class="pricing-feature"><div class="pricing-feature-dot"></div>Live and deployed in 5–7 business days</div>
+        <div class="pricing-feature"><div class="pricing-feature-dot"></div>Contact form, service pages, and all copy written for you</div>
+        <div class="pricing-feature"><div class="pricing-feature-dot"></div>You own the site outright — no lock-in</div>
+      </div>
+      <a href="#contact" class="pricing-cta">Start a Project <i data-lucide="arrow-right" style="width:14px;height:14px"></i></a>
+    </div>
+
+    <div class="pricing-card fade-up" style="transition-delay:0.1s">
+      <p class="pricing-type">The Care Plan</p>
+      <div class="pricing-price">$200</div>
+      <p class="pricing-price-sub">Per month, cancel anytime — add it on after launch</p>
+      <div class="pricing-divider"></div>
+      <div class="pricing-features">
+        <div class="pricing-feature"><div class="pricing-feature-dot"></div>Unlimited small edits turned around within 48 hours</div>
+        <div class="pricing-feature"><div class="pricing-feature-dot"></div>Google Business Profile management and monthly updates</div>
+        <div class="pricing-feature"><div class="pricing-feature-dot"></div>Monthly conversion check on your contact form and hero section</div>
+        <div class="pricing-feature"><div class="pricing-feature-dot"></div>Security monitoring and SSL certificate management</div>
+        <div class="pricing-feature"><div class="pricing-feature-dot"></div>Direct line to Matt — no ticketing systems or support queues</div>
+      </div>
+      <a href="#contact" class="pricing-cta">Add a Care Plan <i data-lucide="arrow-right" style="width:14px;height:14px"></i></a>
+      <p class="pricing-note">Care Plan is optional. Most clients add it after seeing how much easier it is to have someone managing the site for them.</p>
+    </div>
+  </div>
+
+  <div class="pricing-faq fade-up">
+    <div class="faq-item">
+      <p class="faq-q">Do I own the site?</p>
+      <p class="faq-a">Yes, completely. Once the project is paid in full, the site is yours. No monthly platform fees, no lock-in, no gotchas. You can take it anywhere.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-q">What do you need from me to get started?</p>
+      <p class="faq-a">Not much. A 30-minute call to talk through your business and goals, any existing logos or brand assets you have, and a few sentences about what makes your practice different. I handle the rest.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-q">What if I don't love the first draft?</p>
+      <p class="faq-a">Two full rounds of revisions are included in every project. In practice, most clients get what they want in the first round. If something isn't right, we fix it — that's what the revisions are for.</p>
+    </div>
+    <div class="faq-item">
+      <p class="faq-q">How is this different from Wix or a template?</p>
+      <p class="faq-a">Every Gridwork site is built from scratch around your specific business, not adapted from something generic. It loads faster, looks more professional, and is built to convert visitors into clients — not just to exist online.</p>
+    </div>
+  </div>
+</section>
+
 <section class="contact" id="contact">
   <p class="section-label fade-up">Get In Touch</p>
   <h2 class="section-heading fade-up">START A<br><span class="outline">PROJECT</span></h2>
@@ -748,7 +765,6 @@
   </div>
 </section>
 
-<!-- FOOTER -->
 <footer>
   <div class="footer-left">
     © 2026 Gridwork Studio · <a href="#">Matthew Janci</a>
@@ -759,31 +775,26 @@
 <script>
   lucide.createIcons();
 
-  // Cursor
   const cursor = document.getElementById('cursor');
   document.addEventListener('mousemove', e => {
     cursor.style.left = e.clientX + 'px';
     cursor.style.top = e.clientY + 'px';
   });
-  document.querySelectorAll('a, button, .service-item, .process-step').forEach(el => {
+  document.querySelectorAll('a, button, .service-item, .process-step, .pricing-card, .faq-item').forEach(el => {
     el.addEventListener('mouseenter', () => cursor.classList.add('hover'));
     el.addEventListener('mouseleave', () => cursor.classList.remove('hover'));
   });
 
-  // Nav scroll
   const navbar = document.getElementById('navbar');
   window.addEventListener('scroll', () => navbar.classList.toggle('scrolled', window.scrollY > 10));
 
-  // Mobile menu
   function toggleMenu() { document.getElementById('mobileMenu').classList.toggle('open'); }
 
-  // Fade up
   const observer = new IntersectionObserver(entries => {
     entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); } });
   }, { threshold: 0.1 });
   document.querySelectorAll('.fade-up').forEach(el => observer.observe(el));
 
-  // Smooth scroll
   document.querySelectorAll('a[href^="#"]').forEach(a => {
     a.addEventListener('click', e => {
       const t = document.querySelector(a.getAttribute('href'));
@@ -791,7 +802,6 @@
     });
   });
 
-  // Form
   async function handleSubmit(e) {
     e.preventDefault();
     const btn = document.getElementById('cfSubmit');
